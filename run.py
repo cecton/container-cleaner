@@ -39,7 +39,7 @@ def clean_containers(client):
             print("Deleted:", container['Id'])
 
 args = parser.parse_args()
-client = docker.Client(base_url="unix://tmp/docker.sock")
+client = docker.Client(base_url="unix://tmp/docker.sock", version='auto')
 
 if args.loop_delay:
     while True:
