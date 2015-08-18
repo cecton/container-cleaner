@@ -2,6 +2,9 @@
 Deletes automatically the containers (including the volumes) that are not
 running and don't have restart policy.
 
+This is particularly useful to clean completed tasks/jobs on Amazon Web
+Services ec2 instances.
+
 ## Example
 
 ```
@@ -17,4 +20,4 @@ docker run -it --rm \
 
  *  --loop-delay
 
-    sleep a certain delay in seconds (0 to disable)
+    sleep a certain delay in seconds (0 to disable, this is the default)
