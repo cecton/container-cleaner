@@ -43,7 +43,7 @@ client = docker.Client(base_url="unix://tmp/docker.sock", version='auto')
 
 if args.loop_delay:
     while True:
-        clean_containers(client)
         time.sleep(args.loop_delay)
+        clean_containers(client)
 else:
     clean_containers(client)
