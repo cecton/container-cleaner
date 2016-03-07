@@ -11,6 +11,10 @@ if len(sys.argv) > 1 and sys.argv[1].startswith('/'):
 import time
 import docker
 import argparse
+from datetime import datetime as dt
+from dateutil.parser import parse
+from dateutil.tz import tzutc
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--dry-run', '-n',
@@ -20,10 +24,17 @@ parser.add_argument('--loop-delay',
                     default=0,
                     type=int,
                     help="sleep a certain delay in seconds (0 to disable)")
+parser.add_argument('--min-age',
+                    default=0,
+                    type=int,
+                    help=("only clean containers stopped since a certain time "
+                          "in seconds (0 to disable)"))
 
 def is_container_to_delete(client, container):
     info = client.inspect_container(container)
+    age = (dt.now(tzutc()) - parse(info['State']['FinishedAt'])).total_seconds()
     return (not info['State']['Running'] and
+            age > args.min_age and
             info['HostConfig']['RestartPolicy']['MaximumRetryCount'] == 0)
 
 def clean_containers(client):

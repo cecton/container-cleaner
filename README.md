@@ -21,3 +21,8 @@ docker run -it --rm \
  *  --loop-delay
 
     sleep a certain delay in seconds (0 to disable, this is the default)
+
+ * --min-age
+
+    only clean containers stopped since a certain time in seconds (0 to disable, this is the default)
+
